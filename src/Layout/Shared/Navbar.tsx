@@ -1,7 +1,21 @@
 import { NavLink } from "react-router-dom";
+import { useTheme } from "../Provider/ThemeContext";
+import { useTheme1 } from "../Provider/NormalContext";
+
 
 
 const Navbar: React.FC = () => { //This ensures proper typing for functional components.
+    const {theme, toggleTheme} = useTheme();
+    console.log(theme)
+    const handleTheme = () => {
+        toggleTheme();
+        console.log(theme)
+    }
+    const {gender, food} = useTheme1();
+    console.log(gender)
+    food()
+    console.log(gender)
+
     const nav1 = (<>
         <li>
             <NavLink to="/">Home</NavLink>
@@ -12,10 +26,17 @@ const Navbar: React.FC = () => { //This ensures proper typing for functional com
         <li>
             <NavLink to="/About">About</NavLink>
         </li>
+        <li>
+            <button onClick = {handleTheme}>changetheme</button>
+        </li>
 
     </>)
     return (
-        <div className="navbar bg-base-100 shadow-sm">
+        <div className="navbar bg-base-100 shadow-sm"style={{
+            background: theme === "light" ? "#fff" : "#333",
+            color: theme === "light" ? "#000" : "#fff",
+            padding: "20px",
+          }}>
             <div className="navbar-start">
                 <div className="dropdown">
                     <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">

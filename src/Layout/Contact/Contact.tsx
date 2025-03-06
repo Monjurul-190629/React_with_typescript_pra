@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useDetails } from '../Provider/PersonHook';
 
 const Contact:React.FC = () => {
 
@@ -10,6 +11,11 @@ const Contact:React.FC = () => {
     const handleSubmit = (e:React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
     }
+
+    const details = useDetails();
+
+    console.log(details.name)
+    console.log(details.roll)
 
 
     return (
