@@ -27,6 +27,12 @@ const Navbar: React.FC = () => { //This ensures proper typing for functional com
             <NavLink to="/About">About</NavLink>
         </li>
         <li>
+            <NavLink to="/Login">Login</NavLink>
+        </li>
+        <li>
+            <NavLink to="/Registration">Registration</NavLink>
+        </li>
+        <li>
             <button onClick = {handleTheme}>changetheme</button>
         </li>
 
