@@ -1,11 +1,14 @@
-import { createUserWithEmailAndPassword } from 'firebase/auth';
-import React, { useState } from 'react';
+///import { createUserWithEmailAndPassword, sendEmailVerification } from 'firebase/auth';
+import React, { useContext, useState } from 'react';
 import Swal from 'sweetalert2'
-import auth from '../Firebase/Firebase.config';
+//import auth from '../Firebase/Firebase.config';
+import { AuthContext } from '../Provider/AuthProvider';
 
 const Registration: React.FC = () => {
 
     const [error, setError] = useState<string | null>(null);
+
+    const { createUser } = useContext(AuthContext);
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 
@@ -34,20 +37,54 @@ const Registration: React.FC = () => {
             return
         }
 
+        /// create user from context
 
-        //// createUser
+        createUser(email, password)
+         .then((result: unknown) => {
+            const user = result.user;
+            Swal.fire({
+                title: "User Successfully created and email was sent",
+                icon: "success",
+                draggable: true
+            });
+            console.log(user)
+         }) 
+         .catch((error : unknown) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            // ..
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Something went wrong!",
+                footer: `${errorCode} ${errorMessage}`
+            });
+        });
+
+
+       /* 
+       
+        //// createUser from raw
 
         createUserWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
                 // Signed up 
                 const user = userCredential.user;
                 // ...
+
                 console.log(user)
-                Swal.fire({
-                    title: "User Successfully created ",
-                    icon: "success",
-                    draggable: true
-                  });
+
+                sendEmailVerification(user)
+                    .then(() => {
+                        // Email verification sent!
+                        // ...
+                        Swal.fire({
+                            title: "User Successfully created and email was sent",
+                            icon: "success",
+                            draggable: true
+                        });
+                    });
+                
             })
             .catch((error) => {
                 const errorCode = error.code;
@@ -58,8 +95,15 @@ const Registration: React.FC = () => {
                     title: "Oops...",
                     text: "Something went wrong!",
                     footer: `${errorCode} ${errorMessage}`
-                  });
+                });
             });
+       
+       
+       
+       
+       
+       
+       */
     }
 
 

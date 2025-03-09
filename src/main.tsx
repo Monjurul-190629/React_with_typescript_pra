@@ -9,6 +9,7 @@ import { ThemeProvider } from './Layout/Provider/ThemeContext'
 import { GexXP } from './Layout/Provider/NormalContext'
 import { PersonProvider } from './Layout/Provider/PersonContext'
 import AboutProvider from './Layout/Provider/AboutContext'
+import { AuthProvider } from './Layout/Provider/AuthProvider'
 
 
 createRoot(document.getElementById('root')!).render(
@@ -17,7 +18,9 @@ createRoot(document.getElementById('root')!).render(
       <PersonProvider>
         <ThemeProvider>
           <GexXP>
-            <RouterProvider router={router} />
+            <AuthProvider>
+              <RouterProvider router={router} />
+            </AuthProvider>
           </GexXP>
         </ThemeProvider>
       </PersonProvider>

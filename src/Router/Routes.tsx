@@ -5,6 +5,7 @@ import Contact from '../Layout/Contact/Contact'
 import About from '../Layout/About/About'
 import Login from '../Layout/SignUp_SignIn/Login'
 import Registration from '../Layout/SignUp_SignIn/Registration'
+import PrivateRoute from '../Layout/Provider/PrivateRoute'
 
 
 export const router = createBrowserRouter([
@@ -18,7 +19,7 @@ export const router = createBrowserRouter([
             },
             {
                 path: 'Contact',
-                element: <Contact/>
+                element: <PrivateRoute><Contact></Contact></PrivateRoute>
             },
             {
                 path: 'Login',

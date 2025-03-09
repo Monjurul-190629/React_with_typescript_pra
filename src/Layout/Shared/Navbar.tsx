@@ -1,11 +1,15 @@
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { useTheme } from "../Provider/ThemeContext";
 import { useTheme1 } from "../Provider/NormalContext";
+import { useContext } from "react";
+import { AuthContext } from "../Provider/AuthProvider";
 
 
 
 const Navbar: React.FC = () => { //This ensures proper typing for functional components.
     const {theme, toggleTheme} = useTheme();
+    const {user, LogOut} = useContext(AuthContext);
+    console.log(user)
     console.log(theme)
     const handleTheme = () => {
         toggleTheme();
@@ -15,6 +19,11 @@ const Navbar: React.FC = () => { //This ensures proper typing for functional com
     console.log(gender)
     food()
     console.log(gender)
+    
+    const handleLogOut = () => {
+        LogOut()
+    }
+    
 
     const nav1 = (<>
         <li>
@@ -62,7 +71,15 @@ const Navbar: React.FC = () => { //This ensures proper typing for functional com
                 </ul>
             </div>
             <div className="navbar-end">
-                <a className="btn">Button</a>
+                {
+                    user  ? <>
+                    <span>{user.email}</span>
+                    <button onClick={handleLogOut}  className="btn btn-primary">Log Out</button>
+                    
+                    </> : 
+                    
+                    <Link to = "/Login"><button className="btn btn-secondary">Log In</button></Link>
+                }
             </div>
         </div>
     );
