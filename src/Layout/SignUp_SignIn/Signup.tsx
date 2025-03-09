@@ -1,6 +1,7 @@
-import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { createUserWithEmailAndPassword, sendEmailVerification } from 'firebase/auth';
 import React from 'react';
 import auth from '../Firebase/Firebase.config';
+import Swal from 'sweetalert2';
 
 const Signup: React.FC = () => {
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -14,12 +15,28 @@ const Signup: React.FC = () => {
         console.log(email, password);
 
         createUserWithEmailAndPassword(auth, email, password)
-        .then((result) => {
-            console.log(result.user)
-        })
-        .catch((error) => {
-            console.log(error)
-        })
+            .then((result) => {
+                sendEmailVerification(result.user)
+                    .then(() => {
+                        // Email verification sent!
+                        // ...
+                        Swal.fire({
+                            title: "User successfully created Now verify your email",
+                            icon: "success",
+                            draggable: true
+                        });
+                    });
+                
+                console.log(result.user)
+            })
+            .catch((error) => {
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: `${error} is happened`,
+                    footer: '<a href="#">Why do I have this issue?</a>'
+                });
+            })
     }
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -38,7 +55,7 @@ const Signup: React.FC = () => {
                                     <label className="fieldset-label">Password</label>
                                     <input onChange={handleChange} name="password" type="password" className="input" placeholder="Password" />
                                     <div><a className="link link-hover">Forgot password?</a></div>
-                                    <button className="btn btn-neutral mt-4">Login</button>
+                                    <button className="btn btn-neutral mt-4">Registration</button>
                                 </form>
                             </fieldset>
                         </div>

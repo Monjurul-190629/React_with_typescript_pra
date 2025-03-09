@@ -3,8 +3,8 @@ import Main from '../Layout/Main'
 import Home from '../Layout/Home/Home'
 import Contact from '../Layout/Contact/Contact'
 import About from '../Layout/About/About'
-import SignIn from '../Layout/SignUp_SignIn/SignIn'
-import Signup from '../Layout/SignUp_SignIn/Signup'
+import Login from '../Layout/SignUp_SignIn/Login'
+import Registration from '../Layout/SignUp_SignIn/Registration'
 
 
 export const router = createBrowserRouter([
@@ -22,7 +22,7 @@ export const router = createBrowserRouter([
             },
             {
                 path: 'Login',
-                element: <SignIn></SignIn>
+                element: <Login></Login>
             },
             {
                 path: 'About',
@@ -30,7 +30,7 @@ export const router = createBrowserRouter([
             },
             {
                 path: 'Registration',
-                element: <Signup></Signup>
+                element: <Registration></Registration>
             },
 
         ]
